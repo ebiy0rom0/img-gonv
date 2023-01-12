@@ -1,28 +1,13 @@
 package main
 
 import (
-	"flag"
 	"fmt"
 	"image"
-	"math"
 	"os"
 )
 
-var (
-	target       string
-	px, py, w, h int
-)
-
-func init() {
-	flag.StringVar(&target, "target", "", "convert image file or directory")
-	flag.IntVar(&px, "px", math.MaxInt, "reference point on horizontal axis")
-	flag.IntVar(&py, "py", math.MaxInt, "reference point on vertical axis")
-	flag.IntVar(&w, "w", math.MaxInt, "horizontal distance from px")
-	flag.IntVar(&h, "h", math.MaxInt, "vertical distance from py")
-}
-
-func LoadImage(path string) (image.Image, error) {
-	file, err := os.Open(path)
+func LoadImage(target string) (image.Image, error) {
+	file, err := os.Open(target)
 	if err != nil {
 		return nil, err
 	}
