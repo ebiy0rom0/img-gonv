@@ -4,6 +4,9 @@ import (
 	"fmt"
 	"image"
 	"os"
+
+	_ "image/jpeg"
+	_ "image/png"
 )
 
 func LoadImage(target string) (image.Image, error) {
@@ -13,11 +16,11 @@ func LoadImage(target string) (image.Image, error) {
 	}
 	defer file.Close()
 
-	img, name, err := image.Decode(file)
+	img, ext, err := image.Decode(file)
 	if err != nil {
 		return nil, err
 	}
-	fmt.Printf("[debug]filename: %s", name)
+	fmt.Printf("[debug]extension: %s\n", ext)
 
 	return img, nil
 }
