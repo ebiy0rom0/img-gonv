@@ -9,12 +9,12 @@ import (
 )
 
 var (
-	path         string
+	target       string
 	px, py, w, h int
 )
 
 func init() {
-	flag.StringVar(&path, "path", "", "convert image file path")
+	flag.StringVar(&target, "target", "", "convert image file or directory")
 	flag.IntVar(&px, "px", math.MaxInt, "reference point on horizontal axis")
 	flag.IntVar(&py, "py", math.MaxInt, "reference point on vertical axis")
 	flag.IntVar(&w, "w", math.MaxInt, "horizontal distance from px")
