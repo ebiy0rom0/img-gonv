@@ -3,7 +3,11 @@ package main
 import (
 	"flag"
 	"fmt"
+	"image"
+	"image/draw"
+	"image/jpeg"
 	"math"
+	"os"
 )
 
 var (
@@ -66,5 +70,36 @@ func run() error {
 	}
 
 	fmt.Println(target, px, py, w, h)
+
+	minX, maxX := func() (int, int) {
+		px2 := int(px) + w
+		if px2 > int(px) {
+			return int(px), px2
+		}
+		return px2, int(px)
+	}()
+	minY, maxY := func() (int, int) {
+		py2 := int(py) + h
+		if py2 > int(py) {
+			return int(py), py2
+		}
+		return py2, int(py)
+	}()
+
+	trimRect := image.Rectangle{
+		Min: image.Point{X: minX, Y: minY},
+		Max: image.Point{X: maxX, Y: maxY},
+	}
+
+	dst := image.NewRGBA(trimRect)
+	draw.Draw(dst, rect, img, image.Point{}, draw.Over)
+
+	file, err := os.Create("./test.jpg")
+	if err != nil {
+		return err
+	}
+	defer file.Close()
+
+	jpeg.Encode(file, dst, &jpeg.Options{Quality: 100})
 	return nil
 }
