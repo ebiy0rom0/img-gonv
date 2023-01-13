@@ -100,6 +100,8 @@ func run() error {
 	}
 	defer file.Close()
 
-	jpeg.Encode(file, dst, &jpeg.Options{Quality: 100})
+	if err := jpeg.Encode(file, dst, &jpeg.Options{Quality: 100}); err != nil {
+		return err
+	}
 	return nil
 }
