@@ -31,10 +31,15 @@ var C = &converter{}
 
 func init() {
 	flag.StringVar(&C.target, "target", "", "convert image file or directory")
-	flag.UintVar(&C.px, "px", math.MaxUint, "reference point on horizontal axis")
-	flag.UintVar(&C.py, "py", math.MaxUint, "reference point on vertical axis")
-	flag.IntVar(&C.w, "w", math.MaxInt, "horizontal distance from px")
-	flag.IntVar(&C.h, "h", math.MaxInt, "vertical distance from py")
+	flag.StringVar(&C.target, "t", "", "shorthand of target")
+	flag.UintVar(&C.px, "pos-x", math.MaxUint, "reference point on horizontal axis")
+	flag.UintVar(&C.px, "px", math.MaxUint, "shorthand of pos-x")
+	flag.UintVar(&C.py, "pos-y", math.MaxUint, "reference point on vertical axis")
+	flag.UintVar(&C.py, "py", math.MaxUint, "shorthand of pos-y")
+	flag.IntVar(&C.w, "width", math.MaxInt, "horizontal distance from px")
+	flag.IntVar(&C.w, "w", math.MaxInt, "shorthand of width")
+	flag.IntVar(&C.h, "height", math.MaxInt, "vertical distance from py")
+	flag.IntVar(&C.h, "h", math.MaxInt, "shotrhand of height")
 }
 
 func (c *converter) ReadImage() error {
