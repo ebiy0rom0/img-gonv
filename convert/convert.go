@@ -12,6 +12,8 @@ import (
 	"image/draw"
 	"image/jpeg"
 	_ "image/png"
+
+	"github.com/ebiy0rom0/img-gonv/config"
 )
 
 type imageInfo struct {
@@ -150,7 +152,7 @@ func (c *converter) convert(info imageInfo) error {
 	dst := image.NewRGBA(trimRect)
 	draw.Draw(dst, rect, info.img, image.Point{}, draw.Over)
 
-	convPath := fmt.Sprintf("../../img/%s", info.name)
+	convPath := filepath.Join(config.OutputPath, info.name)
 	file, err := os.Create(convPath)
 	if err != nil {
 		return err
