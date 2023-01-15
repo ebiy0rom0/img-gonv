@@ -6,6 +6,9 @@ endif
 GOCMD:=go
 GOBUILD:=go build
 
+CMD_DIR:=./cmd/gonv
+CONF_NAME:=gonv.cnf
+
 BIN_DIR:=./bin
 BIN_NAME:=gonv
 ifeq ($(GOOS), windows)
@@ -19,10 +22,10 @@ help:
 	@echo help
 
 PHONY: build
-build: $(BIN_PATH)
+build: $(BIN_PATH) copy
 
 $(BIN_PATH): mkdir clean
-	$(GOBUILD) -o $@ -ldflags '-s -w' .
+	$(GOBUILD) -o $@ -ldflags '-s -w' $(CMD_DIR)/main.go
 
 PHONY: mkdir
 mkdir:
@@ -38,4 +41,12 @@ ifeq ($(GOOS), windows)
 	Remove-Item -Recurse -Force -Path $(BIN_DIR)/*
 else
 	rm -rf $(BIN_DIR)/*
+endif
+
+PHONY: copy
+copy:
+ifeq ($(GOOS), windows)
+	Copy-Item $(CMD_DIR)/$(CONF_NAME) -Force -Destination $(BIN_DIR) > $$null
+else
+	cp -f $(CMD_DIR)/$(CONF_NAME) $(BIN_DIR)
 endif
