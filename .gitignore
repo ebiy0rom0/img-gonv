@@ -15,4 +15,4 @@
 bin/
 
 # test image output directory
-img/
+out/
